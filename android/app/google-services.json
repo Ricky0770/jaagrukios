@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "249073929156",
+    "firebase_url": "https://jagruk-7ca8e-default-rtdb.firebaseio.com",
+    "project_id": "jagruk-7ca8e",
+    "storage_bucket": "jagruk-7ca8e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249073929156:android:f538117eb5fe2827c0f291",
+        "android_client_info": {
+          "package_name": "com.example.jagruk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5M8xb1naXgi5U0gywOeqB7N1hzvLNeMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249073929156:android:cdf4a72beaf7bd0ec0f291",
+        "android_client_info": {
+          "package_name": "com.netlink.jaagruk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5M8xb1naXgi5U0gywOeqB7N1hzvLNeMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249073929156:android:a9565ddd16dce2cfc0f291",
+        "android_client_info": {
+          "package_name": "com.netlink.publicuser.jaagruk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5M8xb1naXgi5U0gywOeqB7N1hzvLNeMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
