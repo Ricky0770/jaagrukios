@@ -20,6 +20,7 @@ class _LoginActivityState extends State<LoginActivity> {
   @override
   Widget build(context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
           child: SingleChildScrollView(
@@ -145,5 +146,13 @@ class _LoginActivityState extends State<LoginActivity> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //await Firebase.initializeApp();
+
   }
 }

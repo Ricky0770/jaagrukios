@@ -7,6 +7,10 @@ import 'package:jagruk/otp_activity.dart';
 
 Future<void> main() async {
  WidgetsFlutterBinding.ensureInitialized();
+ try {
   await Firebase.initializeApp();
-  runApp(LoginActivity());
+ } catch (error) {
+  print(error);
+ }
+ runApp(LoginActivity());
 }
