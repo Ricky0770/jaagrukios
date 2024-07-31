@@ -1,9 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:jagruk/firebase_options.dart';
-import 'package:jagruk/home_activity.dart';
-import 'package:jagruk/login_activity.dart';
-import 'package:jagruk/otp_activity.dart';
+
+import 'loginactivitystatic.dart';
 
 Future<void> main() async {
  WidgetsFlutterBinding.ensureInitialized();
@@ -12,5 +10,17 @@ Future<void> main() async {
  } catch (error) {
   print(error);
  }
- runApp(LoginActivity());
+ runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+ const MyApp({super.key});
+
+ @override
+ Widget build(BuildContext context) {
+  return MaterialApp(
+   debugShowCheckedModeBanner: false,
+   home: LoginActivityStatic(),
+  );
+ }
 }

@@ -4,143 +4,133 @@ import 'package:jagruk/database_helper.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-class HomeActivity extends StatelessWidget {
- final String mobileNumber;
+import 'categorypage.dart';
+import 'profilepage.dart';  // Import the new Profile page
+
+class HomeActivity extends StatefulWidget {
+  final String mobileNumber;
 
   const HomeActivity({Key? key, required this.mobileNumber}) : super(key: key);
 
   @override
+  _HomeActivityState createState() => _HomeActivityState();
+}
+
+class _HomeActivityState extends State<HomeActivity> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-             SizedBox(height: 50),
-            ImageSlider(),
-            SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Text(
-                'आप इन योजनाओ के पात्र हो सकते है  :',
-                style: TextStyle(
-                  color: Color(0xFF577B8D),
-                  fontFamily: 'Roboto',
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ), // Image Slider
-      
-            SizedBox(height: 10),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  children: [
-                    CategoryBox(
-                      color: Color(0xFF3F588F), // Custom color
-                      categoryName: 'Finance',
-                      onTap: () => _showCategoryContent(context, 'Finance'),
-                    ),
-                    SizedBox(height: 10),
-                    CategoryBox(
-                      color: Color(0xFF79D7D2), // Custom color
-                      categoryName: 'Health',
-                      onTap: () => _showCategoryContent(context, 'Health'),
-                    ),
-                    SizedBox(height: 10),
-                    CategoryBox(
-                      color: Color(0xFFF7A0E4), // Custom color
-                      categoryName: 'Education',
-                      onTap: () => _showCategoryContent(context, 'Education'),
-                    ),
-                    SizedBox(height: 10),
-                    CategoryBox(
-                      color: Color(0xFFF49494), // Custom color
-                      categoryName: 'Agriculture',
-                      onTap: () => _showCategoryContent(context, 'Agriculture'),
-                    ),
-                    SizedBox(height: 10),
-                    CategoryBox(
-                      color: Color(0xFF96C3E4), // Custom color
-                      categoryName: 'Employment',
-                      onTap: () => _showCategoryContent(context, 'Employment'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _showDatabaseContent(context);
-              },
-              child: const Text('Show Database Content'),
-            ),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-        ),
+    return Scaffold(
+      body: _selectedIndex == 0 ? _buildHomePage(context) : ProfilePage(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
       ),
     );
   }
 
-  void _showCategoryContent(BuildContext context, String category) async {
-    // Fetch schemes based on category from database
-    final databaseHelper = DatabaseHelper.instance;
-    final db = await databaseHelper.database;
-
-    final schemes = await db.query(DatabaseHelper.TABLE_YOJNA,
-        where: '${DatabaseHelper.COL_Y_CATEGORY} = ?', whereArgs: [category]);
-
-    // Show schemes in UI (you can customize this as per your UI requirements)
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('$category Schemes'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: schemes.map((scheme) {
-              return Text(
-                  'Name: ${scheme[DatabaseHelper.COL_Y_NAME]}, Desc: ${scheme[DatabaseHelper.COL_Y_DESC]}');
-            }).toList(),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Close'),
+  Widget _buildHomePage(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(height: 50),
+        ImageSlider(),
+        SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Text(
+            'आप इन योजनाओ के पात्र हो सकते है  :',
+            style: TextStyle(
+              color: Color(0xFF577B8D),
+              fontFamily: 'Roboto',
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        );
-      },
+          ),
+        ),
+        SizedBox(height: 10),
+        Expanded(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Column(
+              children: [
+                CategoryBox(
+                  color: Color(0xFF3F588F),
+                  categoryName: 'Finance',
+                  onTap: () => _navigateToCategoryPage(context, 'Finance'),
+                ),
+                SizedBox(height: 10),
+                CategoryBox(
+                  color: Color(0xFF79D7D2),
+                  categoryName: 'Health',
+                  onTap: () => _navigateToCategoryPage(context, 'Health'),
+                ),
+                SizedBox(height: 10),
+                CategoryBox(
+                  color: Color(0xFFF7A0E4),
+                  categoryName: 'Education',
+                  onTap: () => _navigateToCategoryPage(context, 'Education'),
+                ),
+                SizedBox(height: 10),
+                CategoryBox(
+                  color: Color(0xFFF49494),
+                  categoryName: 'Agriculture',
+                  onTap: () => _navigateToCategoryPage(context, 'Agriculture'),
+                ),
+                SizedBox(height: 10),
+                CategoryBox(
+                  color: Color(0xFF96C3E4),
+                  categoryName: 'Employment',
+                  onTap: () => _navigateToCategoryPage(context, 'Employment'),
+                ),
+              ],
+            ),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            _showDatabaseContent(context);
+          },
+          child: const Text('Show Database Content'),
+        ),
+      ],
+    );
+  }
+
+  void _navigateToCategoryPage(BuildContext context, String category) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CategoryPage(category: category),
+      ),
     );
   }
 
   void _showDatabaseContent(BuildContext context) async {
-    // Initialize the database
     final databaseHelper = DatabaseHelper.instance;
     final db = await databaseHelper.database;
 
-    // Query users and yojnas
     final users = await db.query(DatabaseHelper.TABLE_USER);
     final yojnas = await db.query(DatabaseHelper.TABLE_YOJNA);
 
-    // Display the content in console (you can modify this to display in UI)
     print('Users:');
     users.forEach((user) {
       print(
@@ -153,7 +143,6 @@ class HomeActivity extends StatelessWidget {
           'Name: ${yojna[DatabaseHelper.COL_Y_NAME]}, Category: ${yojna[DatabaseHelper.COL_Y_CATEGORY]}, Gender: ${yojna[DatabaseHelper.COL_Y_GENDER]}, Desc: ${yojna[DatabaseHelper.COL_Y_DESC]}');
     });
 
-    // Example to show content in UI, replace with your preferred UI logic
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -257,7 +246,7 @@ class CategoryBox extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: screenWidth - 20, // screen width with 10 padding on each side
+        width: screenWidth - 20,
         height: 90,
         margin: const EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(

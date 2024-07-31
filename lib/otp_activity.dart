@@ -51,17 +51,17 @@ class _OTPActivityState extends State<OTPActivity> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-                  backgroundColor: const Color.fromARGB(255, 33, 1, 95),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40),)
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    backgroundColor: const Color.fromARGB(255, 33, 1, 95),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40),)
                 ),
                 onPressed: () async {
                   try {
                     print('Verifying OTP: $otpCode');
                     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-                      verificationId: widget.verificationId,
-                      smsCode: otpCode
+                        verificationId: widget.verificationId,
+                        smsCode: otpCode
                     );
                     await FirebaseAuth.instance.signInWithCredential(credential).then((value) {
                       print("Welcome User");
